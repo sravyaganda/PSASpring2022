@@ -2,7 +2,7 @@ package edu.neu.coe.info6205.sort.par;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
-
+import java.util.concurrent.ForkJoinPool;
 /**
  * This code has been fleshed out by Ziyao Qiao. Thanks very much.
  * TODO tidy it up a bit.
@@ -13,6 +13,7 @@ class ParSort {
 
     public static void sort(int[] array, int from, int to) {
         if (to - from < cutoff) Arrays.sort(array, from, to);
+       else if(ForkJoinPool.commonPool().getRunningThreadCount() > 4) Arrays.sort(array, from,  to);
         else {
             // FIXME next few lines should be removed from public repo.
             CompletableFuture<int[]> parsort1 = parsort(array, from, from + (to - from) / 2); // TO IMPLEMENT
